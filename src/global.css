@@ -74,3 +74,22 @@ footer {
         font-size: 28px;
     }
 }
+@media (max-width: 768px) {
+    .news__item {
+        flex-direction: column;
+    }
+
+    .news__meta {
+        width: 100%; /
+    }
+
+    .news__meta-photo {
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .news__description {
+        width: 100%;
+    }
+}
