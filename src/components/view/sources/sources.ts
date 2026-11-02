@@ -1,21 +1,31 @@
 import './sources.css';
+import { ISourceDetails } from '../../types';
 
 class Sources {
-    draw(data) {
-        const fragment = document.createDocumentFragment();
-        const sourceItemTemp = document.querySelector('#sourceItemTemp');
+  // Принимает массив источников
+  public draw(data: ISourceDetails[]): void {
+    const fragment = document.createDocumentFragment();
+    const sourceItemTemp = document.querySelector('#sourceItemTemp') as HTMLTemplateElement;
 
-        data.forEach((item) => {
-            const sourceClone = sourceItemTemp.content.cloneNode(true);
+    if (!sourceItemTemp) return; // Защита от null
 
-            sourceClone.querySelector('.source__item-name').textContent = item.name;
-            sourceClone.querySelector('.source__item').setAttribute('data-source-id', item.id);
+    data.forEach((item) => {
+      const sourceClone = sourceItemTemp.content.cloneNode(true) as DocumentFragment;
 
-            fragment.append(sourceClone);
-        });
+      const name = sourceClone.querySelector('.source__item-name');
+      if (name) name.textContent = item.name;
 
-        document.querySelector('.sources').append(fragment);
+      const sourceItem = sourceClone.querySelector('.source__item');
+      if (sourceItem) sourceItem.setAttribute('data-source-id', item.id);
+
+      fragment.append(sourceClone);
+    });
+
+    const sourcesContainer = document.querySelector('.sources');
+    if (sourcesContainer) {
+      sourcesContainer.append(fragment);
     }
+  }
 }
 
 export default Sources;
