@@ -7,6 +7,7 @@ class App {
     private view: AppView;
     private currentCategory: SourceCategory = 'all';
     private allSourcesData: ISourcesResponse | null = null;
+    private pinnedSources: Set<string> = new Set();
 
     constructor() {
         this.controller = new AppController();
@@ -16,7 +17,7 @@ class App {
     public start(): void {
         this.controller.getSources((data) => {
             this.allSourcesData = data;
-            this.view.drawSources(data, this.currentCategory);
+            this.view.drawSources(data, this.currentCategory, this.pinnedSources);
         });
 
         const categoriesContainer = document.querySelector('.categories');
@@ -30,7 +31,7 @@ class App {
                     this.currentCategory = target.getAttribute('data-category') as SourceCategory;
 
                     if (this.allSourcesData) {
-                        this.view.drawSources(this.allSourcesData, this.currentCategory);
+                        this.view.drawSources(this.allSourcesData, this.currentCategory, this.pinnedSources);
                     }
                 }
             });
@@ -57,8 +58,29 @@ class App {
         if (sourcesContainer) {
             sourcesContainer.addEventListener('click', (e) => {
                 const target = e.target as HTMLElement;
-                const sourceItem = target.closest('.source__item');
 
+                if (target.classList.contains('source__star')) {
+                    const sourceItem = target.closest('.source__item');
+                    const sourceId = sourceItem?.getAttribute('data-source-id');
+
+                    if (sourceId) {
+                        if (this.pinnedSources.has(sourceId)) {
+                            this.pinnedSources.delete(sourceId);
+                            target.classList.remove('active');
+                        } else {
+                            this.pinnedSources.add(sourceId);
+                            target.classList.add('active');
+                        }
+
+                        const pinnedBtn = document.querySelector('[data-category="pinned"]');
+                        if (pinnedBtn) {
+                            pinnedBtn.textContent = `★ Pinned - ${this.pinnedSources.size}`;
+                        }
+                    }
+                    return;
+                }
+
+                const sourceItem = target.closest('.source__item');
                 if (sourceItem) {
                     const sourceId = sourceItem.getAttribute('data-source-id');
                     const sourceName = sourceItem.getAttribute('data-source-name');

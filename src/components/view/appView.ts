@@ -22,9 +22,9 @@ export class AppView {
         this.news.draw(values);
     }
 
-    public drawSources(data: ISourcesResponse, category: SourceCategory): void {
+    public drawSources(data: ISourcesResponse, category: SourceCategory, pinnedSources: Set<string>): void {
         const values = data?.sources ? data.sources : [];
-        this.sources.draw(values, category);
+        this.sources.draw(values, category, pinnedSources);
     }
 }
 

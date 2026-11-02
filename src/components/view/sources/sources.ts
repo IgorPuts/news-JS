@@ -10,7 +10,7 @@ class Sources {
         this.countElement = document.querySelector('.sources-count');
     }
 
-    public draw(data: ISourceDetails[], currentCategory: SourceCategory): void {
+    public draw(data: ISourceDetails[], currentCategory: SourceCategory, pinnedSources: Set<string>): void {
         if (!this.container) return;
         this.container.innerHTML = '';
 
@@ -18,7 +18,7 @@ class Sources {
 
         const filteredData = data.filter((item) => {
             if (currentCategory === 'all') return true;
-            if (currentCategory === 'pinned') return false; // Избранное пока пустое
+            if (currentCategory === 'pinned') return pinnedSources.has(item.id);
             return item.category === currentCategory;
         });
 
@@ -51,8 +51,11 @@ class Sources {
             starBtn.classList.add('source__star');
             starBtn.textContent = '★';
 
-            sourceClone.append(colorLine, infoBlock, starBtn);
+            if (pinnedSources.has(item.id)) {
+                starBtn.classList.add('active');
+            }
 
+            sourceClone.append(colorLine, infoBlock, starBtn);
             sourceClone.setAttribute('data-source-id', item.id);
             sourceClone.setAttribute('data-source-name', item.name);
 
