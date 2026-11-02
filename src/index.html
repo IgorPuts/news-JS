@@ -1,18 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>NewsPortal</title>
+        <title>News Portal</title>
     </head>
     <body>
         <header>
-            <h1>News Portal</h1>
+            <h1>News <span class="accent">Portal</span></h1>
         </header>
+
         <main>
-            <div class="sources"></div>
-            <div class="news"></div>
+            <section class="sources-panel">
+                <div class="search-bar">
+                    <input type="text" id="search-sources" placeholder="Search sources..." />
+                    <span class="sources-count">0 of 0</span>
+                </div>
+
+                <div class="categories">
+                    <button class="category-btn active" data-category="all">All</button>
+                    <button class="category-btn" data-category="pinned">★ Pinned - 0</button>
+                    <button class="category-btn" data-category="business">Business</button>
+                    <button class="category-btn" data-category="entertainment">Entertainment</button>
+                    <button class="category-btn" data-category="general">General</button>
+                    <button class="category-btn" data-category="health">Health</button>
+                    <button class="category-btn" data-category="science">Science</button>
+                    <button class="category-btn" data-category="sports">Sports</button>
+                    <button class="category-btn" data-category="technology">Technology</button>
+                </div>
+
+                <div class="sources"></div>
+            </section>
+
+            <section class="news-section">
+                <h2 class="news-title">News from ...</h2>
+                <div class="news"></div>
+            </section>
         </main>
 
         <footer>
@@ -20,14 +43,19 @@
                 <a href="https://github.com/IgorPuts" target="_blank">GitHub</a>
                 <span>2026</span>
                 <a href="https://rs.school/courses/javascript" target="_blank">
-                    <img src="./assets/rss-logo.svg" alt="RS School" width="40">
+                    <img src="" id="rs-logo" alt="RS School" width="40">
                 </a>
             </div>
         </footer>
 
         <template id="sourceItemTemp">
             <div class="source__item">
-                <span class="source__item-name"></span>
+                <div class="source__color-line"></div>
+                <div class="source__info">
+                    <span class="source__item-name"></span>
+                    <span class="source__item-desc"></span>
+                </div>
+                <button class="source__star">★</button>
             </div>
         </template>
 
@@ -35,10 +63,6 @@
             <div class="news__item">
                 <div class="news__meta">
                     <div class="news__meta-photo"></div>
-                    <ul class="news__meta-details">
-                        <li class="news__meta-author"></li>
-                        <li class="news__meta-date"></li>
-                    </ul>
                 </div>
                 <div class="news__description">
                     <h2 class="news__description-title"></h2>
