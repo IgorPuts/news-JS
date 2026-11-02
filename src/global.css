@@ -73,14 +73,14 @@ footer {
     header h1 {
         font-size: 28px;
     }
-}
-@media (max-width: 768px) {
+
+    /* Адаптивность карточек новостей */
     .news__item {
         flex-direction: column;
     }
 
     .news__meta {
-        width: 100%; /
+        width: 100%;
     }
 
     .news__meta-photo {
