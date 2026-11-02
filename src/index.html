@@ -11,6 +11,7 @@
         </header>
 
         <main>
+            <!-- Панель управления источниками -->
             <section class="sources-panel">
                 <div class="search-bar">
                     <input type="text" id="search-sources" placeholder="Search sources..." />
@@ -29,8 +30,10 @@
                     <button class="category-btn" data-category="technology">Technology</button>
                 </div>
 
+
                 <div class="sources"></div>
             </section>
+
 
             <section class="news-section">
                 <h2 class="news-title">News from ...</h2>
@@ -43,21 +46,10 @@
                 <a href="https://github.com/IgorPuts" target="_blank">GitHub</a>
                 <span>2026</span>
                 <a href="https://rs.school/courses/javascript" target="_blank">
-                    <img src="" id="rs-logo" alt="RS School" width="40">
+                    <img src="./assets/rss-logo.svg" alt="RS School" width="40">
                 </a>
             </div>
         </footer>
-
-        <template id="sourceItemTemp">
-            <div class="source__item">
-                <div class="source__color-line"></div>
-                <div class="source__info">
-                    <span class="source__item-name"></span>
-                    <span class="source__item-desc"></span>
-                </div>
-                <button class="source__star">★</button>
-            </div>
-        </template>
 
         <template id="newsItemTemp">
             <div class="news__item">
