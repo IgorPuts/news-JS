@@ -1,25 +1,31 @@
 import News from './news/news';
 import Sources from './sources/sources';
-import { IArticlesResponse, ISourcesResponse } from '../../types';
+import { IArticlesResponse, ISourcesResponse, SourceCategory } from '../../types';
 
 export class AppView {
-  private news: News;
-  private sources: Sources;
+    public news: News;
+    public sources: Sources;
 
-  constructor() {
-    this.news = new News();
-    this.sources = new Sources();
-  }
+    constructor() {
+        this.news = new News();
+        this.sources = new Sources();
+    }
 
-  public drawNews(data: IArticlesResponse): void {
-    const values = data?.articles ? data.articles : [];
-    this.news.draw(values);
-  }
+    public drawNews(data: IArticlesResponse, sourceName: string = 'all sources'): void {
+        const values = data?.articles ? data.articles : [];
 
-  public drawSources(data: ISourcesResponse): void {
-    const values = data?.sources ? data.sources : [];
-    this.sources.draw(values);
-  }
+        const newsTitle = document.querySelector('.news-title');
+        if (newsTitle) {
+            newsTitle.textContent = `News from ${sourceName}`;
+        }
+
+        this.news.draw(values);
+    }
+
+    public drawSources(data: ISourcesResponse, category: SourceCategory): void {
+        const values = data?.sources ? data.sources : [];
+        this.sources.draw(values, category);
+    }
 }
 
 export default AppView;
