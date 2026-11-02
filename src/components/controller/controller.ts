@@ -1,39 +1,51 @@
 import AppLoader from './appLoader';
+import { ISourcesResponse, IArticlesResponse } from '../../types';
+
+// Создаем тип для callback-функций
+type SourcesCallback = (data: ISourcesResponse) => void;
+type NewsCallback = (data: IArticlesResponse) => void;
 
 class AppController extends AppLoader {
-    getSources(callback) {
-        super.getResp(
+  // Типизируем метод getSources
+  public getSources(callback: SourcesCallback): void {
+    super.getResp<ISourcesResponse>(
+      {
+        endpoint: 'sources',
+      },
+      callback
+    );
+  }
+
+  // Типизируем метод getNews, который работает с MouseEvent
+  public getNews(e: MouseEvent, callback: NewsCallback): void {
+    let target = e.target as HTMLElement;
+    const newsContainer = e.currentTarget as HTMLElement;
+
+    // Проверяем, что target существует, чтобы strict mode не ругался
+    while (target && target !== newsContainer) {
+      if (target.classList.contains('source__item')) {
+        const sourceId = target.getAttribute('data-source-id');
+
+        // Проверяем, что sourceId не null
+        if (sourceId && newsContainer.getAttribute('data-source') !== sourceId) {
+          newsContainer.setAttribute('data-source', sourceId);
+
+          super.getResp<IArticlesResponse>(
             {
-                endpoint: 'sources',
+              endpoint: 'everything',
+              options: {
+                sources: sourceId,
+              },
             },
             callback
-        );
-    }
-
-    getNews(e, callback) {
-        let target = e.target;
-        const newsContainer = e.currentTarget;
-
-        while (target !== newsContainer) {
-            if (target.classList.contains('source__item')) {
-                const sourceId = target.getAttribute('data-source-id');
-                if (newsContainer.getAttribute('data-source') !== sourceId) {
-                    newsContainer.setAttribute('data-source', sourceId);
-                    super.getResp(
-                        {
-                            endpoint: 'everything',
-                            options: {
-                                sources: sourceId,
-                            },
-                        },
-                        callback
-                    );
-                }
-                return;
-            }
-            target = target.parentNode;
+          );
         }
+        return;
+      }
+      // Приводим тип parentNode к HTMLElement
+      target = target.parentNode as HTMLElement;
     }
+  }
 }
 
 export default AppController;
