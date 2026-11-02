@@ -1,5 +1,5 @@
 import './news.css';
-import { IArticle } from '../../types';
+import { IArticle } from '../../../types';
 
 class News {
   // Принимает массив статей

@@ -1,5 +1,5 @@
 import './sources.css';
-import { ISourceDetails } from '../../types';
+import { ISourceDetails } from '../../../types';
 
 class Sources {
   // Принимает массив источников
